@@ -4,6 +4,14 @@ import { useState } from 'react';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DatePicker from '@mui/lab/DatePicker';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import Button from '@mui/material/Button';
 
 function App() {
 
@@ -19,6 +27,9 @@ function App() {
     dateTo: null,
     description: ''
   });
+  const [experienceList, setExperienceList] = useState([]);
+  const [errorExperience, setErrorExperience] = useState('');
+
   const [addUniversity, setAddUniversity] = useState({
     name: '',
     dateFrom: null,
@@ -27,6 +38,8 @@ function App() {
     specialization: '',
     level: ''
   });
+  const [universityList, setUniversityList] = useState([]);
+  const [errorUniversity, setErrorUniversity] = useState('');
 
   return (
     <div className="App">
@@ -67,6 +80,7 @@ function App() {
             renderInput={(params) => <TextField {...params} />}
           />
         </LocalizationProvider>
+
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <DatePicker
             label="Data zakończenia"
@@ -80,6 +94,62 @@ function App() {
         <TextField label="Opis" variant="outlined" value={addExperience.description}
           onChange={(e) => { setAddExperience({ ...addExperience, description: e.target.value }) }} />
       </p>
+
+      <p style={{color: 'red'}}>
+        {errorExperience}
+      </p>
+
+      <p>
+        <Button variant="contained" onClick={() => {
+          if(addExperience.name!=''&&addExperience.dateFrom!=null&&addExperience.dateTo!=null&&addExperience.description!=''){
+            setErrorExperience('');
+            setExperienceList([...experienceList, addExperience]);
+            setAddExperience({
+              name: '',
+              dateFrom: null,
+              dateTo: null,
+              description: ''
+            });
+          }
+          else{
+            setErrorExperience('Wypełnij wszystkie pola');
+          }
+          
+        }}>Dodaj</Button>
+      </p>
+
+      <p>
+        <TableContainer component={Paper}>
+          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell align="center">Nazwa</TableCell>
+                <TableCell align="center">Doświadczenie</TableCell>
+                <TableCell align="center">Od</TableCell>
+                <TableCell align="center">Do</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {experienceList.map((experience, index) => (
+                <TableRow
+                  key={index}
+                >
+                  <TableCell align="center" component="th" scope="row">
+                    {experience.name && experience.name}
+                  </TableCell>
+                  <TableCell align="center">{experience.description && experience.description.toString()}</TableCell>
+                  <TableCell align="center">{experience.dateFrom && experience.dateFrom.toLocaleDateString()}</TableCell>
+                  <TableCell align="center">{experience.dateTo && experience.dateTo.toLocaleDateString()}</TableCell>
+                  <Button variant="contained" onClick={() => {
+                    setExperienceList(experienceList.filter((item, indexTemp) => indexTemp !== index));
+                  }}>Usuń</Button>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </p>
+
       <p>
         <TextField label="Nazwa uczelni" variant="outlined" value={addUniversity.name}
           onChange={(e) => { setAddUniversity({ ...addUniversity, name: e.target.value }) }} />
@@ -110,6 +180,69 @@ function App() {
         <TextField label="Poziom wykształcenia" variant="outlined" value={addUniversity.level}
           onChange={(e) => { setAddUniversity({ ...addUniversity, level: e.target.value }) }} />
       </p>
+
+      <p style={{color: 'red'}}>
+        {errorUniversity}
+      </p>
+
+      <p>
+        <Button variant="contained" onClick={() => {
+          if(addUniversity.name!=''&&addUniversity.dateFrom!=null&&addUniversity.dateTo!=null&&addUniversity.field!=''&&
+          addUniversity.specialization!=''&&addUniversity.level!=''){
+            setErrorUniversity('');
+            setUniversityList([...universityList, addUniversity]);
+            setAddUniversity({
+              name: '',
+              dateFrom: null,
+              dateTo: null,
+              field: '',
+              specialization: '',
+              level: ''
+            });
+          }
+          else{
+            setErrorUniversity('Wypełnij wszystkie pola');
+          }
+          
+        }}>Dodaj</Button>
+      </p>
+
+      <p>
+        <TableContainer component={Paper}>
+          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell align="center">Nazwa</TableCell>
+                <TableCell align="center">Kierunek</TableCell>
+                <TableCell align="center">Specjalizacja</TableCell>
+                <TableCell align="center">Poziom wykształcenia</TableCell>
+                <TableCell align="center">Od</TableCell>
+                <TableCell align="center">Do</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {universityList.map((university, index) => (
+                <TableRow
+                  key={index}
+                >
+                  <TableCell align="center" component="th" scope="row">
+                    {university.name && university.name}
+                  </TableCell>
+                  <TableCell align="center">{university.field && university.field.toString()}</TableCell>
+                  <TableCell align="center">{university.specialization && university.specialization.toString()}</TableCell>
+                  <TableCell align="center">{university.level && university.level.toString()}</TableCell>
+                  <TableCell align="center">{university.dateFrom && university.dateFrom.toLocaleDateString()}</TableCell>
+                  <TableCell align="center">{university.dateTo && university.dateTo.toLocaleDateString()}</TableCell>
+                  <Button variant="contained" onClick={() => {
+                    setUniversityList(universityList.filter((item, indexTemp) => indexTemp !== index));
+                  }}>Usuń</Button>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </p>
+
     </div>
   );
 }
