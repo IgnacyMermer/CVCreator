@@ -41,6 +41,10 @@ function App() {
   const [universityList, setUniversityList] = useState([]);
   const [errorUniversity, setErrorUniversity] = useState('');
 
+  const [languages, setLanguages] = useState([]);
+  const [languageTemp, setLanguageTemp] = useState('');
+
+
   return (
     <div className="App">
       <p>Twoje dane:</p>
@@ -91,17 +95,19 @@ function App() {
             renderInput={(params) => <TextField {...params} />}
           />
         </LocalizationProvider>
-        <TextField label="Opis" variant="outlined" value={addExperience.description}
+      </p>
+      <p>
+        <TextField label="Opis" variant="outlined" value={addExperience.description} multiline style={{ width: "70%" }}
           onChange={(e) => { setAddExperience({ ...addExperience, description: e.target.value }) }} />
       </p>
 
-      <p style={{color: 'red'}}>
+      <p style={{ color: 'red' }}>
         {errorExperience}
       </p>
 
       <p>
         <Button variant="contained" onClick={() => {
-          if(addExperience.name!=''&&addExperience.dateFrom!=null&&addExperience.dateTo!=null&&addExperience.description!=''){
+          if (addExperience.name != '' && addExperience.dateFrom != null && addExperience.dateTo != null && addExperience.description != '') {
             setErrorExperience('');
             setExperienceList([...experienceList, addExperience]);
             setAddExperience({
@@ -111,10 +117,10 @@ function App() {
               description: ''
             });
           }
-          else{
+          else {
             setErrorExperience('Wypełnij wszystkie pola');
           }
-          
+
         }}>Dodaj</Button>
       </p>
 
@@ -140,9 +146,11 @@ function App() {
                   <TableCell align="center">{experience.description && experience.description.toString()}</TableCell>
                   <TableCell align="center">{experience.dateFrom && experience.dateFrom.toLocaleDateString()}</TableCell>
                   <TableCell align="center">{experience.dateTo && experience.dateTo.toLocaleDateString()}</TableCell>
-                  <Button variant="contained" onClick={() => {
-                    setExperienceList(experienceList.filter((item, indexTemp) => indexTemp !== index));
-                  }}>Usuń</Button>
+                  <TableCell align="center">
+                    <Button variant="contained" onClick={() => {
+                      setExperienceList(experienceList.filter((item, indexTemp) => indexTemp !== index));
+                    }}>Usuń</Button>
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -181,14 +189,14 @@ function App() {
           onChange={(e) => { setAddUniversity({ ...addUniversity, level: e.target.value }) }} />
       </p>
 
-      <p style={{color: 'red'}}>
+      <p style={{ color: 'red' }}>
         {errorUniversity}
       </p>
 
       <p>
         <Button variant="contained" onClick={() => {
-          if(addUniversity.name!=''&&addUniversity.dateFrom!=null&&addUniversity.dateTo!=null&&addUniversity.field!=''&&
-          addUniversity.specialization!=''&&addUniversity.level!=''){
+          if (addUniversity.name != '' && addUniversity.dateFrom != null && addUniversity.dateTo != null && addUniversity.field != '' &&
+            addUniversity.specialization != '' && addUniversity.level != '') {
             setErrorUniversity('');
             setUniversityList([...universityList, addUniversity]);
             setAddUniversity({
@@ -200,10 +208,10 @@ function App() {
               level: ''
             });
           }
-          else{
+          else {
             setErrorUniversity('Wypełnij wszystkie pola');
           }
-          
+
         }}>Dodaj</Button>
       </p>
 
@@ -233,15 +241,55 @@ function App() {
                   <TableCell align="center">{university.level && university.level.toString()}</TableCell>
                   <TableCell align="center">{university.dateFrom && university.dateFrom.toLocaleDateString()}</TableCell>
                   <TableCell align="center">{university.dateTo && university.dateTo.toLocaleDateString()}</TableCell>
-                  <Button variant="contained" onClick={() => {
-                    setUniversityList(universityList.filter((item, indexTemp) => indexTemp !== index));
-                  }}>Usuń</Button>
+                  <TableCell align="center">
+                    <Button variant="contained" onClick={() => {
+                      setUniversityList(universityList.filter((item, indexTemp) => indexTemp !== index));
+                    }}>Usuń</Button>
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
         </TableContainer>
       </p>
+
+      <p>
+        <TextField label="Język obcy" variant="outlined" value={languageTemp} onChange={(e) => { setLanguageTemp(e.target.value) }} />
+      </p>
+
+      <p>
+        <Button variant="contained" onClick={() =>{
+          setLanguages([...languages, languageTemp]);
+        }}>Dodaj</Button>
+      </p>
+
+      <p>
+        <TableContainer component={Paper}>
+          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell align="center">Nazwa</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {languages.map((language, index) => (
+                <TableRow
+                  key={index}
+                >
+                  <TableCell align="center" component="th" scope="row">
+                    {language && language}
+                  </TableCell>
+                  <TableCell align="center">
+                    <Button variant="contained" onClick={() => {
+                      setLanguages(languages.filter((item, indexTemp) => indexTemp !== index));
+                    }}>Usuń</Button>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </p>      
 
     </div>
   );
