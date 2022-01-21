@@ -12,6 +12,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
+import { sendRequestForCV } from './actions/CVActions';
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [email, setEmail] = useState('');
   const [city, setCity] = useState('');
+  const [dateOfBirth, setDateOfBirth] = useState(null);
   const [value, setValue] = useState(null);
   const [addExperience, setAddExperience] = useState({
     name: '',
@@ -289,6 +291,9 @@ function App() {
             </TableBody>
           </Table>
         </TableContainer>
+        <Button variant="contained" onClick={() =>{
+          sendRequestForCV(name+" "+surname, phoneNumber, email, city, dateOfBirth, experienceList, universityList, languages);
+        }}>Wyślij request</Button>
       </p>      
 
     </div>
