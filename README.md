@@ -12,5 +12,6 @@ Of course, this project is not finished yet, it needs to connect frontend with b
 [test.pdf](https://github.com/IgnacyMermer/CVCreator/files/8778561/test.pdf)
 
 ##### And here are screenshots from frontend side.
-![2022-05-26](https://user-images.githubusercontent.com/60555082/170478358-f804af8c-78bc-430a-af54-010013cd9d1c.png)
-![2022-05-26 (1)](https://user-images.githubusercontent.com/60555082/170478354-fe3463dd-a33e-4171-84c4-3a904ff4db45.png)
+
+![2022-05-26 (2)](https://user-images.githubusercontent.com/60555082/170478550-2b8b641e-465b-4edd-9591-926bd71646ef.png)
+![2022-05-26 (3)](https://user-images.githubusercontent.com/60555082/170478560-590208c6-7a36-4380-be10-a408f0deaa2e.png)
